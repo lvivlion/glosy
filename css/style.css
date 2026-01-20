@@ -1631,6 +1631,18 @@ section {
         padding: 0.75rem 1rem;
         font-size: 0.8rem;
     }
+
+    /* Phone Icon - All the way left with 1px padding */
+    .header-content>.nav-cta,
+    .header-content>.nav-cta.mobile-order-first {
+        left: 1px !important;
+    }
+
+    /* Hamburger - All the way right with 1px padding */
+    .header-content>.header-controls,
+    .header-content>.header-controls.mobile-order-last {
+        right: 1px !important;
+    }
 }
 
 /* =============================================
