@@ -1618,6 +1618,14 @@ section {
 }
 
 @media (max-width: 480px) {
+    .logo {
+        font-size: 1.6rem;
+    }
+
+    h1 {
+        font-size: 1.3rem;
+    }
+
     .container {
         padding: 0 var(--spacing-sm);
     }
