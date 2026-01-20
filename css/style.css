@@ -427,8 +427,8 @@ section {
     position: relative;
     background: linear-gradient(135deg, var(--color-bg-dark) 0%, #1a1510 100%);
     overflow: hidden;
-    padding-top: 160px;
-    /* Reduced to 160px to fit screen */
+    padding-top: 130px;
+    /* Reduced to 130px to fit screen */
 }
 
 .hero::before {
@@ -450,7 +450,7 @@ section {
     grid-template-areas:
         "text visual"
         "cta visual";
-    gap: var(--spacing-lg);
+    gap: var(--spacing-md);
     align-items: center;
     position: relative;
     z-index: 1;
@@ -542,7 +542,7 @@ section {
     /* Reduced to fit on one line */
     line-height: 1.1;
     color: var(--color-white);
-    margin-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
 }
 
 .hero-title span {
@@ -553,14 +553,14 @@ section {
 .hero-subtitle {
     font-size: 1.25rem;
     color: var(--color-text-muted);
-    margin-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
 }
 
 .hero-features {
     display: flex;
     flex-wrap: wrap;
     gap: var(--spacing-md);
-    margin-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
 }
 
 .hero-feature {
