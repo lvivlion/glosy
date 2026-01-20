@@ -6,15 +6,18 @@
 /* CSS Variables */
 :root {
     /* Colors - extracted from flier */
-    --color-primary: #D4A844;
-    --color-primary-dark: #B8922E;
-    --color-primary-light: #E8C066;
+    --color-primary: #ffb81c;
+    --color-primary-dark: #e0a319;
+    /* Adjusted for #ffb81c */
+    --color-primary-light: #ffc957;
+    /* Adjusted for #ffb81c */
     --color-bg-dark: #0d0d0d;
     --color-bg-section: #1a1a1a;
     --color-bg-card: #242424;
     --color-text-light: #f5f5f5;
     --color-text-muted: #a0a0a0;
-    --color-accent: #C49B32;
+    --color-accent: #ffb81c;
+    /* Synced with primary */
     --color-success: #4CAF50;
     --color-white: #ffffff;
 
@@ -39,7 +42,7 @@
     --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
     --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
     --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
-    --shadow-glow: 0 0 20px rgba(212, 168, 68, 0.3);
+    --shadow-glow: 0 0 20px rgba(255, 184, 28, 0.3);
 
     /* Transitions */
     --transition-fast: 0.2s ease;
@@ -250,8 +253,9 @@ section {
 
 .header-content>.header-controls.desktop-order-second {
     order: 2 !important;
-    margin-right: auto !important;
-    margin-left: 50px !important;
+    /* margin-right: auto !important; - Removed to allow right alignment */
+    margin-left: auto !important;
+    /* Ensure it pushes to right */
 }
 
 .header-content>.nav-cta.desktop-order-last {
@@ -260,8 +264,9 @@ section {
 
 .logo {
     font-family: 'Style Script', cursive;
-    font-size: 2.8rem;
-    background: linear-gradient(135deg, #FFD700 0%, #D4A844 50%, #B8860B 100%);
+    font-size: 3.5rem;
+    /* Increased from 2.8rem */
+    background: linear-gradient(135deg, #ffd700 0%, #ffb81c 50%, #e0a319 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -422,7 +427,8 @@ section {
     position: relative;
     background: linear-gradient(135deg, var(--color-bg-dark) 0%, #1a1510 100%);
     overflow: hidden;
-    padding-top: 80px;
+    padding-top: 160px;
+    /* Reduced to 160px to fit screen */
 }
 
 .hero::before {
@@ -1402,6 +1408,18 @@ section {
     }
 }
 
+/* Footer Credits */
+.footer-credits {
+    margin-top: 3rem;
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-size: 0.85rem;
+    opacity: 0.7;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
 /* Gallery Utility Classes */
 .hidden-gallery {
     display: none !important;
@@ -1821,7 +1839,8 @@ section {
 
 @media (max-width: 768px) {
     .logo {
-        font-size: 2.2rem;
+        font-size: 2.8rem;
+        /* Increased from 2.2rem */
     }
 
     /* Center benefit icons on mobile */
