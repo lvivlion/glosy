@@ -1255,7 +1255,9 @@ section {
         display: grid !important;
         grid-template-columns: 60px 1fr 60px !important;
         align-items: center !important;
-        padding: 10px 0 !important;
+        padding: 0 !important;
+        min-height: 70px;
+        /* Ensure sufficient height */
     }
 
     /* Mobile: Phone Left, Logo Center, Hamburger Right */
@@ -1265,7 +1267,9 @@ section {
         grid-column: 1 !important;
         justify-self: start !important;
         display: flex !important;
-        padding-left: var(--spacing-sm);
+        align-items: center !important;
+        height: 100%;
+        padding-left: var(--spacing-md);
         order: unset !important;
     }
 
@@ -1286,20 +1290,24 @@ section {
         grid-column: 3 !important;
         justify-self: end !important;
         display: flex !important;
+        align-items: center !important;
         justify-content: flex-end !important;
-        padding-right: var(--spacing-sm);
+        height: 100%;
+        padding-right: var(--spacing-md);
         order: unset !important;
     }
 
     .nav-links {
         display: none;
         position: fixed;
-        top: 60px;
+        top: 70px;
+        /* Match header height */
         left: 0;
         right: 0;
         bottom: 0;
         /* Full height overlay */
-        background: rgba(13, 13, 13, 0.98);
+        background: #0d0d0d;
+        /* Solid background */
         flex-direction: column;
         padding: var(--spacing-xl) var(--spacing-md);
         z-index: 1001;
