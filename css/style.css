@@ -1259,32 +1259,36 @@ section {
     }
 
     /* Mobile: Phone Left, Logo Center, Hamburger Right */
+    /* Explicitly placing items in grid columns to override DOM order */
     .header-content>.nav-cta,
     .header-content>.nav-cta.mobile-order-first {
-        order: unset !important;
+        grid-column: 1 !important;
         justify-self: start !important;
         display: flex !important;
         padding-left: var(--spacing-sm);
+        order: unset !important;
     }
 
     .header-content>.logo,
     .header-content>.logo.mobile-order-center {
-        order: unset !important;
+        grid-column: 2 !important;
         justify-self: center !important;
         text-align: center !important;
         margin: 0 !important;
         font-size: 1.8rem !important;
         width: 100%;
         white-space: nowrap;
+        order: unset !important;
     }
 
     .header-content>.header-controls,
     .header-content>.header-controls.mobile-order-last {
-        order: unset !important;
+        grid-column: 3 !important;
         justify-self: end !important;
         display: flex !important;
         justify-content: flex-end !important;
         padding-right: var(--spacing-sm);
+        order: unset !important;
     }
 
     .nav-links {
