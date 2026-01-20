@@ -205,11 +205,40 @@ section {
     left: 0;
     right: 0;
     z-index: 1000;
-    background: rgba(13, 13, 13, 0.95);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(212, 168, 68, 0.2);
+    background: rgba(13, 13, 13, 0.85);
+    /* More transparent for glass effect */
+    backdrop-filter: blur(15px);
+    /* Stronger blur */
+    -webkit-backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(212, 168, 68, 0.3);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     transition: var(--transition-normal);
 }
+
+/* Nav Link Glossy Effect */
+.nav-links a {
+    position: relative;
+    overflow: hidden;
+}
+
+.nav-links a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(120deg,
+            transparent,
+            rgba(212, 168, 68, 0.4),
+            transparent);
+    transition: 0.5s;
+}
+
+.nav-links a:hover::before {
+    left: 100%;
+}
+
 
 .header-content {
     display: flex;
@@ -1244,43 +1273,39 @@ section {
 
 @media (max-width: 768px) {
     .header-content {
-        display: flex !important;
-        justify-content: space-between !important;
+        display: grid !important;
+        grid-template-columns: 60px 1fr 60px !important;
         align-items: center !important;
-        flex-direction: row !important;
         padding: 10px 0 !important;
     }
 
-    /* Mobile: Phone Left (order 1), Logo Center (order 2), Hamburger Right (order 3) */
-    /* Using equal width for side elements to ensure perfect logo centering */
-    .header-content>.nav-cta.mobile-order-first,
-    .header-content>.nav-cta {
-        order: 1 !important;
-        flex: 0 0 60px !important;
-        /* Fixed width for symmetry */
+    /* Mobile: Phone Left, Logo Center, Hamburger Right */
+    .header-content>.nav-cta,
+    .header-content>.nav-cta.mobile-order-first {
+        order: unset !important;
+        justify-self: start !important;
         display: flex !important;
-        justify-content: flex-start !important;
+        padding-left: var(--spacing-sm);
     }
 
-    .header-content>.logo.mobile-order-center,
-    .header-content>.logo {
-        order: 2 !important;
-        flex: 1 1 auto !important;
-        /* Takes up remaining space */
-        display: flex !important;
-        justify-content: center !important;
+    .header-content>.logo,
+    .header-content>.logo.mobile-order-center {
+        order: unset !important;
+        justify-self: center !important;
         text-align: center !important;
         margin: 0 !important;
         font-size: 1.8rem !important;
+        width: 100%;
+        white-space: nowrap;
     }
 
-    .header-content>.header-controls.mobile-order-last,
-    .header-content>.header-controls {
-        order: 3 !important;
-        flex: 0 0 60px !important;
-        /* Fixed width to match left side */
+    .header-content>.header-controls,
+    .header-content>.header-controls.mobile-order-last {
+        order: unset !important;
+        justify-self: end !important;
         display: flex !important;
         justify-content: flex-end !important;
+        padding-right: var(--spacing-sm);
     }
 
     .nav-links {
@@ -1316,6 +1341,8 @@ section {
 
     .mobile-toggle {
         display: flex !important;
+        position: relative;
+        /* Ensure z-index works */
         flex-direction: column;
         justify-content: space-between;
         width: 30px;

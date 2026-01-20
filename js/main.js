@@ -212,26 +212,43 @@ document.addEventListener('DOMContentLoaded', function () {
 const galleryImages = document.querySelectorAll('.gallery-item img');
 let currentImageIndex = 0;
 
-function openLightbox(index) {
+window.openLightbox = function (index) {
   const lightbox = document.getElementById('lightbox');
   const lightboxImg = document.getElementById('lightbox-img');
   const counter = document.getElementById('lightbox-counter');
 
   currentImageIndex = index;
-  lightboxImg.src = galleryImages[index].src;
-  lightboxImg.alt = galleryImages[index].alt;
-  counter.textContent = `${index + 1} / ${galleryImages.length}`;
+  // Ensure galleryImages has items before accessing
+  if (galleryImages.length > 0 && galleryImages[index]) {
+    lightboxImg.src = galleryImages[index].src;
+    lightboxImg.alt = galleryImages[index].alt;
+    counter.textContent = `${index + 1} / ${galleryImages.length}`;
 
-  lightbox.classList.add('active');
-  document.body.style.overflow = 'hidden';
-}
+    lightbox.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  } else {
+    console.error('Image source not found for index:', index);
+  }
+};
 
-function closeLightbox() {
+window.closeLightbox = function () {
   const lightbox = document.getElementById('lightbox');
-  lightbox.classList.remove('active');
-  document.body.style.overflow = '';
-}
+  if (lightbox) {
+    lightbox.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+};
 
-function changeImage(direction) {
+window.changeImage = function (direction) {
   currentImageIndex += direction;
+
+  if (currentImageIndex < 0) {
+    currentImageIndex = galleryImages.length - 1;
+  } else if (currentImageIndex >= galleryImages.length) {
+    currentImageIndex = 0;
+  }
+
+  // Update view
+  window.openLightbox(currentImageIndex);
+};
 
