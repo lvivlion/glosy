@@ -1632,6 +1632,12 @@ section {
         font-size: 0.8rem;
     }
 
+    /* Logo - Smaller size to fit without wrapping */
+    .header-content>.logo,
+    .header-content>.logo.mobile-order-center {
+        font-size: 1.8rem !important;
+    }
+
     /* Phone Icon - All the way left with 1px padding */
     .header-content>.nav-cta,
     .header-content>.nav-cta.mobile-order-first {
