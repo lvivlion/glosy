@@ -1632,16 +1632,31 @@ section {
         font-size: 0.8rem;
     }
 
+    /* Remove container padding on very small screens */
+    .container {
+        padding: 0 0.25rem;
+    }
+
+    /* Center hero content text */
+    .hero-content {
+        text-align: center;
+    }
+
     /* Logo - Smaller size to fit without wrapping */
     .header-content>.logo,
     .header-content>.logo.mobile-order-center {
         font-size: 1.8rem !important;
     }
 
-    /* Phone Icon - All the way left with 1px padding */
+    /* Hero Title - Smaller on very small screens */
+    .hero-title {
+        font-size: clamp(2.0rem, 4vw, 3.2rem);
+    }
+
+    /* Phone Icon - All the way left with 5px padding */
     .header-content>.nav-cta,
     .header-content>.nav-cta.mobile-order-first {
-        left: 1px !important;
+        left: 5px !important;
     }
 
     /* Hamburger - All the way right with 1px padding */
