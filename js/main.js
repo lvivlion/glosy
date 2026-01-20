@@ -10,16 +10,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
   if (mobileToggle && navLinks) {
     mobileToggle.addEventListener('click', function (e) {
+      console.log('Mobile toggle clicked');
+      e.preventDefault();
       e.stopPropagation();
       navLinks.classList.toggle('active');
-      mobileToggle.classList.toggle('active');
-    });
+      this.classList.toggle('active');
 
-    // Close menu when clicking anywhere else
-    document.addEventListener('click', function (e) {
-      if (!mobileToggle.contains(e.target) && !navLinks.contains(e.target)) {
-        navLinks.classList.remove('active');
-        mobileToggle.classList.remove('active');
+      // Prevent scrolling when menu is open
+      if (navLinks.classList.contains('active')) {
+        document.body.style.overflow = 'hidden';
+      } else {
+        document.body.style.overflow = '';
       }
     });
 
@@ -28,6 +29,7 @@ document.addEventListener('DOMContentLoaded', function () {
       link.addEventListener('click', () => {
         navLinks.classList.remove('active');
         mobileToggle.classList.remove('active');
+        document.body.style.overflow = '';
       });
     });
   }
@@ -90,50 +92,8 @@ document.addEventListener('DOMContentLoaded', function () {
     observer.observe(el);
   });
 
-  // Contact form handling
-  const contactForm = document.getElementById('contactForm');
-
-  if (contactForm) {
-    contactForm.addEventListener('submit', function (e) {
-      e.preventDefault();
-
-      // Get form data
-      const formData = new FormData(this);
-      const name = formData.get('name');
-      const phone = formData.get('phone');
-      const email = formData.get('email');
-      const message = formData.get('message');
-
-      // Create mailto link with form data
-      const subject = encodeURIComponent('Website Inquiry - Bathtub Refinishing');
-      const body = encodeURIComponent(
-        `Name: ${name}\n` +
-        `Phone: ${phone}\n` +
-        `Email: ${email}\n\n` +
-        `Message:\n${message}`
-      );
-
-      // For now, show a success message and offer to call
-      const submitBtn = this.querySelector('button[type="submit"]');
-      const originalText = submitBtn.innerHTML;
-
-      submitBtn.innerHTML = `
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <polyline points="20 6 9 17 4 12"/>
-        </svg>
-        Thank You!
-      `;
-      submitBtn.style.background = '#4CAF50';
-
-      // Show confirmation message
-      setTimeout(() => {
-        alert(`Thank you, ${name}! We'll call you at ${phone} shortly to discuss your project.\n\nOr call us now at 412-290-5857!`);
-        this.reset();
-        submitBtn.innerHTML = originalText;
-        submitBtn.style.background = '';
-      }, 500);
-    });
-  }
+  // Form handling is now managed by the Google Forms success handler below.
+  // The submit event will now naturally submit to the hidden_iframe.
 
   // Phone number formatting
   const phoneInput = document.getElementById('phone');
@@ -180,13 +140,20 @@ document.addEventListener('DOMContentLoaded', function () {
   const formSuccessMsg = document.getElementById('formSuccess');
   const resetBtn = document.getElementById('resetFormBtn');
 
-  if (googleForm && formSuccessMsg) {
+  window.handleFormSubmit = function () {
+    console.log('Form submission detected via iframe onload');
+    if (googleForm && formSuccessMsg) {
+      googleForm.style.display = 'none';
+      formSuccessMsg.style.display = 'block';
+      formSuccessMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  };
+
+  if (googleForm) {
     googleForm.addEventListener('submit', function () {
-      setTimeout(function () {
-        googleForm.style.display = 'none';
-        formSuccessMsg.style.display = 'block';
-        formSuccessMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }, 500);
+      console.log('Form submit event triggered');
+      // The actual submission is handled by target="hidden_iframe"
+      // handleFormSubmit will be called by the iframe onload event
     });
   }
 

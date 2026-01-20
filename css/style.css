@@ -218,6 +218,21 @@ section {
     padding: var(--spacing-sm) 0;
 }
 
+/* Desktop Alignment: Logo Left, Controls Center, CTA Right */
+.header-content>.logo.desktop-order-first {
+    order: 1 !important;
+}
+
+.header-content>.header-controls.desktop-order-second {
+    order: 2 !important;
+    margin-right: auto !important;
+    margin-left: 50px !important;
+}
+
+.header-content>.nav-cta.desktop-order-last {
+    order: 3 !important;
+}
+
 .logo {
     font-family: 'Style Script', cursive;
     font-size: 2.8rem;
@@ -230,6 +245,7 @@ section {
     display: inline-flex;
     align-items: center;
     filter: drop-shadow(0 0 5px rgba(212, 168, 68, 0.3));
+    text-decoration: none;
 }
 
 .logo span {
@@ -682,6 +698,10 @@ section {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: var(--spacing-sm);
+}
+
+.hidden-gallery {
+    display: none !important;
 }
 
 .gallery-item {
@@ -1171,26 +1191,55 @@ section {
 }
 
 @media (max-width: 768px) {
+    .header-content {
+        display: flex !important;
+        justify-content: space-between !important;
+        flex-direction: row !important;
+        padding: 10px 0 !important;
+    }
+
+    /* Mobile: Phone Left (order 1), Logo Center (order 2), Hamburger Right (order 3) */
+    .nav-cta.mobile-order-first {
+        order: 1 !important;
+        flex: 1 !important;
+        display: flex !important;
+        justify-content: flex-start !important;
+    }
+
+    .logo.mobile-order-center {
+        order: 2 !important;
+        flex: 2 !important;
+        display: flex !important;
+        justify-content: center !important;
+        text-align: center !important;
+        margin: 0 !important;
+    }
+
+    .header-controls.mobile-order-last {
+        order: 3 !important;
+        flex: 1 !important;
+        display: flex !important;
+        justify-content: flex-end !important;
+    }
+
     .nav-links {
         display: none;
         position: fixed;
-        top: 80px;
-        /* Adjusted top to ensure it's below header */
+        top: 60px;
         left: 0;
         right: 0;
-        background: var(--color-bg-dark);
+        bottom: 0;
+        /* Full height overlay */
+        background: rgba(13, 13, 13, 0.98);
         flex-direction: column;
-        padding: var(--spacing-md);
-        border-bottom: 2px solid var(--color-primary);
+        padding: var(--spacing-xl) var(--spacing-md);
         z-index: 1001;
         text-align: center;
-        /* Center the text */
-        gap: var(--spacing-md);
+        gap: var(--spacing-lg);
     }
 
     .nav-links.active {
         display: flex !important;
-        /* Force display flex */
     }
 
     .nav-links li {
@@ -1199,12 +1248,13 @@ section {
 
     .nav-links a {
         display: block;
-        font-size: 1.25rem;
+        font-size: 2rem;
         padding: var(--spacing-sm) 0;
+        color: var(--color-white);
     }
 
     .mobile-toggle {
-        display: flex;
+        display: flex !important;
         flex-direction: column;
         justify-content: space-between;
         width: 30px;
@@ -1213,18 +1263,21 @@ section {
         border: none;
         cursor: pointer;
         padding: 0;
+        z-index: 2000;
+        /* Higher than nav-links */
     }
 
     .mobile-toggle span {
+        display: block;
         width: 100%;
-        height: 2px;
-        background-color: var(--color-primary);
+        height: 3px;
+        background: var(--color-primary);
         transition: var(--transition-normal);
-        transform-origin: left center;
+        border-radius: 2px;
     }
 
     .mobile-toggle.active span:nth-child(1) {
-        transform: rotate(45deg);
+        transform: translateY(8px) rotate(45deg);
     }
 
     .mobile-toggle.active span:nth-child(2) {
@@ -1232,49 +1285,22 @@ section {
     }
 
     .mobile-toggle.active span:nth-child(3) {
-        transform: rotate(-45deg);
-    }
-
-    .header-content {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .mobile-order-first {
-        order: -1;
-        flex: 1;
-        display: flex;
-        justify-content: flex-start;
-    }
-
-    .mobile-order-center {
-        order: 0;
-        flex: 2;
-        display: flex;
-        justify-content: center;
-        text-align: center;
-    }
-
-    .mobile-order-last {
-        order: 1;
-        flex: 1;
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-        gap: 15px;
+        transform: translateY(-9px) rotate(-45deg);
     }
 
     .desktop-only {
-        display: none;
+        display: none !important;
     }
 
     .phone-cta svg {
-        width: 24px;
-        height: 24px;
+        width: 28px;
+        height: 28px;
     }
 
-    /* Center benefit icons on mobile */
+    .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
     .benefits-grid {
         text-align: center;
     }
@@ -1286,14 +1312,6 @@ section {
 
     .before-after {
         grid-template-columns: 1fr;
-    }
-
-    .pricing-card.featured {
-        transform: none;
-    }
-
-    .pricing-card.featured:hover {
-        transform: translateY(-5px);
     }
 
     h1 {
