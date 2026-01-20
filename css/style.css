@@ -180,6 +180,11 @@ section {
     color: var(--color-bg-dark);
 }
 
+/* Call Now Button Glow */
+.hero-cta .btn-primary {
+    animation: glowPulse 2s infinite;
+}
+
 .btn-secondary {
     background: transparent;
     color: var(--color-primary);
@@ -436,6 +441,9 @@ section {
 .hero-content {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+        "text visual"
+        "cta visual";
     gap: var(--spacing-lg);
     align-items: center;
     position: relative;
@@ -443,28 +451,95 @@ section {
 }
 
 .hero-text {
+    grid-area: text;
     animation: fadeInUp 1s ease;
+    max-width: 100%;
 }
 
-.hero-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--spacing-xs);
-    background: rgba(212, 168, 68, 0.15);
-    border: 1px solid rgba(212, 168, 68, 0.3);
-    padding: var(--spacing-xs) var(--spacing-sm);
-    border-radius: var(--radius-full);
-    font-size: 0.875rem;
-    color: var(--color-primary);
-    margin-bottom: var(--spacing-md);
+.hero-cta {
+    grid-area: cta;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+    /* Remove top margin as grid gap handles it, or keep small if needed */
+    margin-top: 0;
+}
+
+.hero-visual {
+    grid-area: visual;
+    position: relative;
+    animation: fadeInRight 1s ease 0.3s both;
+    border-radius: 20px;
+    /* Ensure container matches image radius for collecting clipping */
+    overflow: hidden;
+    /* Clip the sparkle */
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    /* Move shadow to container */
+}
+
+/* Auto Sparkle for Hero Image */
+.hero-visual::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.4) 50%, rgba(255, 255, 255, 0) 100%);
+    transform: skewX(-25deg);
+    z-index: 2;
+    pointer-events: none;
+    animation: magicSparkleAuto 5s ease-in-out infinite;
+}
+
+.hero-visual img {
+    /* Remove shadow/radius from img as it's now on container, or keep radius just in case */
+    border-radius: 20px;
+    box-shadow: none;
+    /* Shadow handled by container */
+}
+
+/* Ensure Desktop Nav is Pushed Right (Retry) */
+@media (min-width: 993px) {
+    .header-content {
+        justify-content: flex-start !important;
+    }
+
+    .header-controls {
+        margin-left: auto !important;
+        padding-right: 2rem;
+        display: flex;
+        align-items: center;
+        flex-grow: 0 !important;
+        width: auto !important;
+    }
+
+    .logo {
+        flex-grow: 0 !important;
+        margin-right: 0;
+    }
+
+    .nav-cta {
+        margin-left: 0;
+        flex-grow: 0 !important;
+    }
+}
+
+.hero-text {
+    animation: fadeInUp 1s ease;
+    max-width: 100%;
 }
 
 .hero-title {
+    font-family: var(--font-heading);
+    font-size: 3.5rem;
+    /* Reduced to fit on one line */
+    line-height: 1.1;
     color: var(--color-white);
     margin-bottom: var(--spacing-md);
 }
 
-.hero-title .highlight {
+.hero-title span {
     color: var(--color-primary);
     display: block;
 }
@@ -495,18 +570,10 @@ section {
     flex-shrink: 0;
 }
 
-.hero-cta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--spacing-sm);
-    margin-top: var(--spacing-md);
-}
+/* .hero-cta moved to .hero-content grid child styles above */
 
 /* Before/After Showcase */
-.hero-visual {
-    position: relative;
-    animation: fadeInRight 1s ease 0.3s both;
-}
+/* .hero-visual moved to .hero-content grid child styles above */
 
 .before-after {
     display: grid;
@@ -1149,6 +1216,34 @@ section {
     }
 }
 
+@keyframes glowPulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(212, 168, 68, 0.7);
+    }
+
+    70% {
+        box-shadow: 0 0 0 15px rgba(212, 168, 68, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(212, 168, 68, 0);
+    }
+}
+
+@keyframes magicSparkleAuto {
+    0% {
+        left: -100%;
+    }
+
+    30% {
+        left: 200%;
+    }
+
+    100% {
+        left: 200%;
+    }
+}
+
 @keyframes fadeInRight {
     from {
         opacity: 0;
@@ -1202,12 +1297,22 @@ section {
 
 
 /* Center Load More Button */
-.gallery-actions {
+.gallery-load-more {
     text-align: center;
     margin-top: 2rem;
     width: 100%;
     display: flex;
     justify-content: center;
+}
+
+.gallery-load-more .btn {
+    padding: 1rem 3rem;
+    /* Extra padding as requested */
+}
+
+/* Mobile Visual Hidden by Default */
+.mobile-hero-visual {
+    display: none;
 }
 
 /* Desktop: Push Nav to Right and Group with CTA */
@@ -1237,21 +1342,43 @@ section {
 @media (max-width: 992px) {
     .hero-content {
         grid-template-columns: 1fr;
+        grid-template-areas:
+            "text"
+            "visual"
+            "cta";
         text-align: center;
+        gap: var(--spacing-md);
+        /* Reduced gap for mobile */
     }
 
-    .hero-features {
-        justify-content: center;
+    /* Mobile Visual Styling */
+    .mobile-hero-visual {
+        display: none !important;
+        /* redundant now with main visual being reordered */
+    }
+
+    .desktop-only {
+        display: none !important;
+    }
+
+    /* Remove order properties as we use grid areas */
+    .hero-text {
+        order: unset;
+    }
+
+    .hero-visual {
+        order: unset;
+        max-width: 500px;
+        margin: 0 auto;
     }
 
     .hero-cta {
         justify-content: center;
+        margin-top: var(--spacing-sm);
     }
 
-    .hero-visual {
-        order: -1;
-        max-width: 500px;
-        margin: 0 auto;
+    .hero-features {
+        justify-content: center;
     }
 
     .contact-wrapper {
