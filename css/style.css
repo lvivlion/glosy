@@ -264,8 +264,8 @@ section {
 
 .logo {
     font-family: 'Style Script', cursive;
-    font-size: 3.5rem;
-    /* Increased from 2.8rem */
+    font-size: 4.5rem;
+    /* Increased from 3.5rem */
     background: linear-gradient(135deg, #ffd700 0%, #ffb81c 50%, #e0a319 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -1465,7 +1465,7 @@ section {
         /* Ensure it takes center stage */
         margin: 0 !important;
         text-align: center !important;
-        font-size: 1.8rem !important;
+        font-size: 2.4rem !important;
         white-space: nowrap;
         order: unset !important;
         grid-column: unset !important;
