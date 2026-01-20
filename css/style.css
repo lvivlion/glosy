@@ -1201,6 +1201,36 @@ section {
 }
 
 
+/* Center Load More Button */
+.gallery-actions {
+    text-align: center;
+    margin-top: 2rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+/* Desktop: Push Nav to Right and Group with CTA */
+@media (min-width: 993px) {
+    .header-content {
+        justify-content: flex-start !important;
+        /* Override space-between */
+    }
+
+    .header-controls {
+        margin-left: auto !important;
+        /* Push nav and CTA to right */
+        padding-right: 2rem;
+        display: flex;
+        align-items: center;
+    }
+
+    .logo {
+        margin-right: 0;
+    }
+}
+
+
 /* =============================================
    RESPONSIVE DESIGN
    ============================================= */
@@ -1252,49 +1282,79 @@ section {
 
 @media (max-width: 768px) {
     .header-content {
-        display: grid !important;
-        grid-template-columns: 60px 1fr 60px !important;
+        display: flex !important;
+        justify-content: center !important;
         align-items: center !important;
+        position: relative !important;
         padding: 0 !important;
         min-height: 70px;
-        /* Ensure sufficient height */
     }
 
-    /* Mobile: Phone Left, Logo Center, Hamburger Right */
-    /* Explicitly placing items in grid columns to override DOM order */
+    /* Mobile: Phone Left (Absolute), Logo Center (Flex), Hamburger Right (Absolute) */
+
+    /* 1. Phone Icon (Left) */
     .header-content>.nav-cta,
     .header-content>.nav-cta.mobile-order-first {
-        grid-column: 1 !important;
-        justify-self: start !important;
+        position: absolute !important;
+        left: 20px !important;
+        /* Consistent centering without transform */
+        top: 0 !important;
+        bottom: 0 !important;
+        margin: auto !important;
+        height: 40px !important;
+        /* Approx height of phone icon */
+
+        /* Reset others */
+        order: unset !important;
+        grid-column: unset !important;
+        justify-self: unset !important;
+        padding: 0 !important;
         display: flex !important;
         align-items: center !important;
-        height: 100%;
-        padding-left: var(--spacing-md);
-        order: unset !important;
     }
 
+    /* 2. Logo (Center) */
     .header-content>.logo,
     .header-content>.logo.mobile-order-center {
-        grid-column: 2 !important;
-        justify-self: center !important;
-        text-align: center !important;
+        position: relative !important;
+        /* Ensure it takes center stage */
         margin: 0 !important;
+        text-align: center !important;
         font-size: 1.8rem !important;
-        width: 100%;
         white-space: nowrap;
         order: unset !important;
+        grid-column: unset !important;
+        width: auto !important;
     }
 
+    /* 3. Hamburger (Right) */
     .header-content>.header-controls,
     .header-content>.header-controls.mobile-order-last {
-        grid-column: 3 !important;
-        justify-self: end !important;
+        position: absolute !important;
+        right: 20px !important;
+        /* Replaced transform centering with margin auto to avoid trapping fixed children */
+        top: 0 !important;
+        bottom: 0 !important;
+        margin: auto !important;
+        height: 20px !important;
+        /* Matches mobile toggle height */
+
+        /* Reset others */
+        order: unset !important;
+        grid-column: unset !important;
+        justify-self: unset !important;
+        padding: 0 !important;
         display: flex !important;
         align-items: center !important;
-        justify-content: flex-end !important;
-        height: 100%;
-        padding-right: var(--spacing-md);
-        order: unset !important;
+    }
+
+    /* Ensure specific icon reset */
+    .phone-cta {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        height: auto !important;
+        margin: 0 !important;
     }
 
     .nav-links {
