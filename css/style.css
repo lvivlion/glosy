@@ -1605,7 +1605,7 @@ section {
     }
 
     h1 {
-        font-size: 1.75rem;
+        font-size: 1.5rem;
     }
 
     h2 {
@@ -1839,6 +1839,9 @@ section {
 /* Logo Styles consolidated above */
 
 @media (max-width: 768px) {
+    .logo {
+        font-size: 2rem;
+    }
 
     /* Center benefit icons on mobile */
     .benefits-grid {
