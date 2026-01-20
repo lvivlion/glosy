@@ -1,0 +1,11 @@
+# Robots.txt for glossybathtub.com
+# Professional Bathtub Refinishing & Reglazing Services
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://glossybathtub.com/sitemap.xml
+
+# Crawl-delay (optional, be kind to servers)
+Crawl-delay: 1

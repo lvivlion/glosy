@@ -1,0 +1,261 @@
+/**
+ * Glossy Bathtub - Main JavaScript
+ * Handles navigation, animations, and form interactions
+ */
+
+document.addEventListener('DOMContentLoaded', function () {
+  // Mobile Navigation Toggle
+  const mobileToggle = document.getElementById('mobileToggle');
+  const navLinks = document.getElementById('navLinks');
+
+  if (mobileToggle && navLinks) {
+    mobileToggle.addEventListener('click', function (e) {
+      e.stopPropagation();
+      navLinks.classList.toggle('active');
+      mobileToggle.classList.toggle('active');
+    });
+
+    // Close menu when clicking anywhere else
+    document.addEventListener('click', function (e) {
+      if (!mobileToggle.contains(e.target) && !navLinks.contains(e.target)) {
+        navLinks.classList.remove('active');
+        mobileToggle.classList.remove('active');
+      }
+    });
+
+    // Close menu when clicking a link
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('active');
+        mobileToggle.classList.remove('active');
+      });
+    });
+  }
+
+  // Header scroll effect
+  const header = document.getElementById('header');
+  let lastScroll = 0;
+
+  window.addEventListener('scroll', function () {
+    const currentScroll = window.pageYOffset;
+
+    if (currentScroll > 100) {
+      header.style.background = 'rgba(13, 13, 13, 0.98)';
+      header.style.boxShadow = '0 2px 20px rgba(0,0,0,0.3)';
+    } else {
+      header.style.background = 'rgba(13, 13, 13, 0.95)';
+      header.style.boxShadow = 'none';
+    }
+
+    lastScroll = currentScroll;
+  });
+
+  // Smooth scroll for anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+
+      if (target) {
+        const headerHeight = header.offsetHeight;
+        const targetPosition = target.offsetTop - headerHeight;
+
+        window.scrollTo({
+          top: targetPosition,
+          behavior: 'smooth'
+        });
+      }
+    });
+  });
+
+  // Intersection Observer for scroll animations
+  const observerOptions = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.1
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('fade-in-up');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  // Observe elements for animation
+  document.querySelectorAll('.benefit-card, .service-card, .pricing-card, .why-us-item').forEach(el => {
+    el.style.opacity = '0';
+    observer.observe(el);
+  });
+
+  // Contact form handling
+  const contactForm = document.getElementById('contactForm');
+
+  if (contactForm) {
+    contactForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      // Get form data
+      const formData = new FormData(this);
+      const name = formData.get('name');
+      const phone = formData.get('phone');
+      const email = formData.get('email');
+      const message = formData.get('message');
+
+      // Create mailto link with form data
+      const subject = encodeURIComponent('Website Inquiry - Bathtub Refinishing');
+      const body = encodeURIComponent(
+        `Name: ${name}\n` +
+        `Phone: ${phone}\n` +
+        `Email: ${email}\n\n` +
+        `Message:\n${message}`
+      );
+
+      // For now, show a success message and offer to call
+      const submitBtn = this.querySelector('button[type="submit"]');
+      const originalText = submitBtn.innerHTML;
+
+      submitBtn.innerHTML = `
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+        Thank You!
+      `;
+      submitBtn.style.background = '#4CAF50';
+
+      // Show confirmation message
+      setTimeout(() => {
+        alert(`Thank you, ${name}! We'll call you at ${phone} shortly to discuss your project.\n\nOr call us now at 412-290-5857!`);
+        this.reset();
+        submitBtn.innerHTML = originalText;
+        submitBtn.style.background = '';
+      }, 500);
+    });
+  }
+
+  // Phone number formatting
+  const phoneInput = document.getElementById('phone');
+
+  if (phoneInput) {
+    phoneInput.addEventListener('input', function (e) {
+      let value = e.target.value.replace(/\D/g, '');
+
+      if (value.length >= 6) {
+        value = `(${value.slice(0, 3)}) ${value.slice(3, 6)}-${value.slice(6, 10)}`;
+      } else if (value.length >= 3) {
+        value = `(${value.slice(0, 3)}) ${value.slice(3)}`;
+      }
+
+      e.target.value = value;
+    });
+  }
+
+  // Add animation delays to grid items
+  document.querySelectorAll('.benefits-grid .benefit-card').forEach((card, index) => {
+    card.style.animationDelay = `${index * 0.1}s`;
+  });
+
+  document.querySelectorAll('.services-grid .service-card').forEach((card, index) => {
+    card.style.animationDelay = `${index * 0.1}s`;
+  });
+
+  document.querySelectorAll('.pricing-grid .pricing-card').forEach((card, index) => {
+    card.style.animationDelay = `${index * 0.1}s`;
+  });
+
+  document.querySelectorAll('.why-us-grid .why-us-item').forEach((item, index) => {
+    item.style.animationDelay = `${index * 0.1}s`;
+  });
+
+  // Set dynamic year in footer
+  const currentYearElement = document.getElementById('currentYear');
+  if (currentYearElement) {
+    currentYearElement.textContent = new Date().getFullYear();
+  }
+
+  // Google Forms success handler
+  const googleForm = document.getElementById('contactForm');
+  const formSuccessMsg = document.getElementById('formSuccess');
+  const resetBtn = document.getElementById('resetFormBtn');
+
+  if (googleForm && formSuccessMsg) {
+    googleForm.addEventListener('submit', function () {
+      setTimeout(function () {
+        googleForm.style.display = 'none';
+        formSuccessMsg.style.display = 'block';
+        formSuccessMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 500);
+    });
+  }
+
+  if (resetBtn) {
+    resetBtn.addEventListener('click', function () {
+      googleForm.reset();
+      googleForm.style.display = 'block';
+      formSuccessMsg.style.display = 'none';
+      googleForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
+
+  // Load More Gallery Images (8 at a time)
+  const loadMoreBtn = document.getElementById('loadMoreBtn');
+  if (loadMoreBtn) {
+    // Initial state: hide items from index 8 onwards
+    const galleryItems = document.querySelectorAll('.gallery-item');
+    galleryItems.forEach((item, index) => {
+      if (index >= 8) {
+        item.classList.add('hidden-gallery');
+      }
+    });
+
+    loadMoreBtn.addEventListener('click', function () {
+      const hiddenItems = document.querySelectorAll('.hidden-gallery');
+      const itemsToShow = Array.from(hiddenItems).slice(0, 8);
+
+      itemsToShow.forEach(item => {
+        item.classList.remove('hidden-gallery');
+        item.classList.add('fade-in');
+      });
+
+      // Hide button if no more hidden items
+      if (document.querySelectorAll('.hidden-gallery').length === 0) {
+        const loadMoreContainer = document.getElementById('loadMoreContainer');
+        if (loadMoreContainer) {
+          loadMoreContainer.style.display = 'none';
+        } else {
+          loadMoreBtn.parentElement.style.display = 'none';
+        }
+      }
+    });
+  }
+});
+
+// Lightbox functionality
+const galleryImages = document.querySelectorAll('.gallery-item img');
+let currentImageIndex = 0;
+
+function openLightbox(index) {
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  const counter = document.getElementById('lightbox-counter');
+
+  currentImageIndex = index;
+  lightboxImg.src = galleryImages[index].src;
+  lightboxImg.alt = galleryImages[index].alt;
+  counter.textContent = `${index + 1} / ${galleryImages.length}`;
+
+  lightbox.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  const lightbox = document.getElementById('lightbox');
+  lightbox.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function changeImage(direction) {
+  currentImageIndex += direction;
+
