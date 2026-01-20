@@ -231,7 +231,7 @@ section {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: var(--spacing-sm) 0;
+    padding: 3rem 0;
 }
 
 /* Order Helpers */
@@ -264,8 +264,9 @@ section {
 
 .logo {
     font-family: 'Style Script', cursive;
-    font-size: 4.5rem;
-    /* Increased from 3.5rem */
+    font-size: 5.5rem;
+    /* Increased to max */
+    line-height: 1.1;
     background: linear-gradient(135deg, #ffd700 0%, #ffb81c 50%, #e0a319 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -1431,7 +1432,7 @@ section {
         justify-content: center !important;
         align-items: center !important;
         position: relative !important;
-        padding: 0 !important;
+        padding: 5px 0 !important;
         min-height: 70px;
     }
 
@@ -1465,7 +1466,10 @@ section {
         /* Ensure it takes center stage */
         margin: 0 !important;
         text-align: center !important;
-        font-size: 2.4rem !important;
+        font-size: 2.8rem !important;
+        line-height: 1.3 !important;
+        padding-top: 5px;
+        padding-bottom: 5px;
         white-space: nowrap;
         order: unset !important;
         grid-column: unset !important;
