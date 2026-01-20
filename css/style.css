@@ -1158,6 +1158,41 @@ section {
     opacity: 0;
 }
 
+/* Magic Sparkling Clean Animation for 'After' photos */
+.gallery-item[data-category="before-after"] img {
+    position: relative;
+    z-index: 1;
+}
+
+.gallery-item[data-category="before-after"]::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0) 100%);
+    transform: skewX(-25deg);
+    z-index: 2;
+    transition: none;
+    pointer-events: none;
+}
+
+.gallery-item[data-category="before-after"]:hover::after {
+    animation: magicSparkle 1.5s ease infinite;
+}
+
+@keyframes magicSparkle {
+    0% {
+        left: -100%;
+    }
+
+    100% {
+        left: 200%;
+    }
+}
+
+
 /* =============================================
    RESPONSIVE DESIGN
    ============================================= */
@@ -1202,6 +1237,11 @@ section {
     }
 }
 
+/* Gallery Utility Classes */
+.hidden-gallery {
+    display: none !important;
+}
+
 @media (max-width: 768px) {
     .header-content {
         display: flex !important;
@@ -1212,20 +1252,21 @@ section {
     }
 
     /* Mobile: Phone Left (order 1), Logo Center (order 2), Hamburger Right (order 3) */
-    /* Using higher specificity to override desktop rules */
+    /* Using equal width for side elements to ensure perfect logo centering */
     .header-content>.nav-cta.mobile-order-first,
     .header-content>.nav-cta {
         order: 1 !important;
-        flex: 0 0 auto !important;
+        flex: 0 0 60px !important;
+        /* Fixed width for symmetry */
         display: flex !important;
         justify-content: flex-start !important;
-        min-width: 44px !important;
     }
 
     .header-content>.logo.mobile-order-center,
     .header-content>.logo {
         order: 2 !important;
         flex: 1 1 auto !important;
+        /* Takes up remaining space */
         display: flex !important;
         justify-content: center !important;
         text-align: center !important;
@@ -1236,10 +1277,10 @@ section {
     .header-content>.header-controls.mobile-order-last,
     .header-content>.header-controls {
         order: 3 !important;
-        flex: 0 0 auto !important;
+        flex: 0 0 60px !important;
+        /* Fixed width to match left side */
         display: flex !important;
         justify-content: flex-end !important;
-        min-width: 44px !important;
     }
 
     .nav-links {

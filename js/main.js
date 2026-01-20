@@ -4,19 +4,32 @@
  */
 
 // Global form success handler
-window.handleFormSubmit = function () {
-  console.log('Form submission detected');
-  const googleForm = document.getElementById('contactForm');
-  const formSuccessMsg = document.getElementById('formSuccess');
+let formSubmitted = false;
 
-  if (googleForm && formSuccessMsg) {
-    googleForm.style.display = 'none';
-    formSuccessMsg.style.display = 'block';
-    formSuccessMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+window.handleFormSubmit = function () {
+  if (formSubmitted) {
+    console.log('Form submission response received');
+    const googleForm = document.getElementById('contactForm');
+    const formSuccessMsg = document.getElementById('formSuccess');
+
+    if (googleForm && formSuccessMsg) {
+      googleForm.style.display = 'none';
+      formSuccessMsg.style.display = 'block';
+      formSuccessMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    // Reset flag
+    formSubmitted = false;
   }
 };
 
 document.addEventListener('DOMContentLoaded', function () {
+  const contactForm = document.getElementById('contactForm');
+  if (contactForm) {
+    contactForm.addEventListener('submit', function () {
+      formSubmitted = true;
+      console.log('Form submitting...');
+    });
+  }
   // Mobile Navigation Toggle
   const mobileToggle = document.getElementById('mobileToggle');
   const navLinks = document.getElementById('navLinks');
