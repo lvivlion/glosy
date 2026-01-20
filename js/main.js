@@ -3,6 +3,19 @@
  * Handles navigation, animations, and form interactions
  */
 
+// Global form success handler
+window.handleFormSubmit = function () {
+  console.log('Form submission detected');
+  const googleForm = document.getElementById('contactForm');
+  const formSuccessMsg = document.getElementById('formSuccess');
+
+  if (googleForm && formSuccessMsg) {
+    googleForm.style.display = 'none';
+    formSuccessMsg.style.display = 'block';
+    formSuccessMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+};
+
 document.addEventListener('DOMContentLoaded', function () {
   // Mobile Navigation Toggle
   const mobileToggle = document.getElementById('mobileToggle');
@@ -139,23 +152,6 @@ document.addEventListener('DOMContentLoaded', function () {
   const googleForm = document.getElementById('contactForm');
   const formSuccessMsg = document.getElementById('formSuccess');
   const resetBtn = document.getElementById('resetFormBtn');
-
-  window.handleFormSubmit = function () {
-    console.log('Form submission detected via iframe onload');
-    if (googleForm && formSuccessMsg) {
-      googleForm.style.display = 'none';
-      formSuccessMsg.style.display = 'block';
-      formSuccessMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
-  };
-
-  if (googleForm) {
-    googleForm.addEventListener('submit', function () {
-      console.log('Form submit event triggered');
-      // The actual submission is handled by target="hidden_iframe"
-      // handleFormSubmit will be called by the iframe onload event
-    });
-  }
 
   if (resetBtn) {
     resetBtn.addEventListener('click', function () {
